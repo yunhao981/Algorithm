@@ -1,0 +1,61 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Ex1_1_10",
+            "request": "launch",
+            "mainClass": "Ex1_1_10"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Ex1_1_9",
+            "request": "launch",
+            "mainClass": "Ex1_1_9"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Ex1_1_8",
+            "request": "launch",
+            "mainClass": "Ex1_1_8"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Ex1_1_7",
+            "request": "launch",
+            "mainClass": "Ex1_1_7"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Ex1_1_6",
+            "request": "launch",
+            "mainClass": "Ex1_1_6"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Ex1_1_3",
+            "request": "launch",
+            "mainClass": "Ex1_1_3"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Ex1_1_2",
+            "request": "launch",
+            "mainClass": "Ex1_1_2"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Ex1_1_1",
+            "request": "launch",
+            "mainClass": "Ex1_1_1"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - BinarySearch",
+            "request": "launch",
+            "mainClass": "BinarySearch"
+        },
+        {
+            "useWSL": true
+        }
+    ]
+}
