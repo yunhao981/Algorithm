@@ -1,63 +1,60 @@
 /* *****************************************************************************
- *  Name: Yunhao Liu
- *  Date: 2019-01-22
- *  Description: Programming Assignment 1 Percolation
+ *  Name:
+ *  Date:
+ *  Description:
  **************************************************************************** */
 
-
-import edu.princeton.cs.algs4.WeightedQuickUnionUF;
-
 public class Percolation {
+    int[][] sites;
+    int size;
 
-    private int n;
-    private WeightedQuickUnionUF uf;
-    private boolean [] siteStatus;
-    private int openSiteNum;
-
+    // create n-by-n grid, with all sites blocked
     public Percolation(int n) {
-        if (n<=0) throw new IllegalArgumentException("n <= 0");
-        this.n = n;
-        uf = new WeightedQuickUnionUF((n+2) * (n+2));
-        siteStatus = new boolean[(n+2)*(n+2)];
-        for (int i = 0; i < siteStatus.length; i++) {
-            siteStatus[i] = false;
-        }
-        openSiteNum = 0;
-    }
-
-    public void open(int row, int col) {
-        if (row<1 || row>n || col<1 || col>n) throw new IllegalArgumentException("row or col illegal");
-        siteStatus[ row * (n+1) + col ] = true;
-
-    }
-
-    public boolean isOpen(int row, int col) {
-        if(row<1 || row>n || col<1 || col>n) throw new IllegalArgumentException("row or col illegal");
-        return siteStatus[row * (n+1) + col];
-    }
-
-    public boolean isFull(int row, int col) {
-        if(row<1 || row>n || col<1 || col>n) throw new IllegalArgumentException("row or col illegal");
-        return uf.connected(0, row * (n+1) + col);
-    }
-
-    public int numberOfOpenSites() {
-        int num = 0;
-        for (int i = 0; i < siteStatus.length; i++) {
-            if (siteStatus[i]) {
-                num++;
+        this.size = n;
+        for(int i=0; i<=n; i++){
+            for(int j=0; j<=n; j++){
+                this.sites[i][j] = -1;
             }
         }
-        this.openSiteNum = num;
-        return num;
     }
 
+    // open site (row, col) if it is not open already
+    public void open(int row, int col) {
+        if(this.sites[row][col] == -1)
+            this.sites[row][col] = 0;
+    }
+
+    // is site (row, col) open?
+    public boolean isOpen(int row, int col) {
+        return this.sites[row][col] == 0;
+    }
+
+    // is site (row, col) full?
+    public boolean isFull(int row, int col) {
+        return this.sites[row][col] == 1;
+    }
+
+    // number of open sites
+    public int numberOfOpenSites() {
+        int openSites = 0;
+        for(int i=0; i<=this.size; i++){
+          for(int j=0; j<=this.size; j++){
+              if(this.sites[i][j] == 0) {
+                  openSites++;
+              }
+          }
+        }
+        return openSites;
+    }
+
+    // does the system percolate?
     public boolean percolates() {
-        return uf.connected(0,(n+1) * (n+1));
+        // Weigted UF obj
+        // sites[1][i] , connected to one of sites[n][i] ?
     }
 
+    // test client (optional)
     public static void main(String[] args) {
-
 
     }
 }
