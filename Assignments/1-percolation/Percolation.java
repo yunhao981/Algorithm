@@ -9,25 +9,34 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 public class Percolation {
     private boolean[] open;
     private int openSites;
-    private int size;
-    private WeightedQuickUnionUF wquf;
+    private final int size;
+    private final WeightedQuickUnionUF wquf;
 
     // create n-by-n grid, with all sites blocked
     public Percolation(int n) {
-        if(n<=0)throw new java.lang.IllegalArgumentException();
+        if (n <= 0)throw new java.lang.IllegalArgumentException();
         this.size = n;
         this.openSites = 0;
         this.open = new boolean[n*n];
         this.wquf = new WeightedQuickUnionUF(n*n + 2);
     }
 
+    private int map2dTo1d(int row, int col) {
+        return (row - 1) * size + col;
+    }
+
+    private boolean indicesValid(int row, int col) {
+        return (row > 0 && row <= size && col > 0 && col <= size);
+    }
+
     // open site (row, col) if it is not open already
     public void open(int row, int col) {
-        int index = (row - 1) * size + col;
-        if(row == 1){
+        if(!indicesValid(row, col)) throw new java.lang.IllegalArgumentException();
+        int index = map2dTo1d(row, col);
+        if (row == 1) {
             wquf.union(0, index);
             open[index-1] = true;
-        }else if(row == size) {
+        } else if (row == size) {
             wquf.union(size * size + 1, index);
             open[index-1] = true;
         }
@@ -37,22 +46,22 @@ public class Percolation {
         int up = row-1;
         int down = row+1;
 
-        if(left > 0 && left <= size && isOpen(row,left)) {
+        if (indicesValid(row, left) &&  isOpen(row, left)) {
             wquf.union(index - 1, index);
             open[index-1] = true;
         }
 
-        if(right > 0 && right <= size && isOpen(row,right)) {
+        if (indicesValid(row, right) && isOpen(row, right)) {
             wquf.union(index + 1, index);
             open[index-1] = true;
         }
 
-        if(up > 0 && up <= size && isOpen(up, col)) {
-            wquf.union(index - size,index);
+        if (indicesValid(up, col) && isOpen(up, col)) {
+            wquf.union(index - size, index);
             open[index-1] = true;
         }
 
-        if(down > 0 && down <= size && isOpen(down, col)) {
+        if (indicesValid(down, col) && isOpen(down, col)) {
             wquf.union(index + size, index);
             open[index-1] = true;
         }
@@ -80,7 +89,7 @@ public class Percolation {
     }
 
     // test client (optional)
-    public static void main(String[] args) {
-
-    }
+    // public static void main(String[] args) {
+    //
+    // }
 }

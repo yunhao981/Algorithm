@@ -9,16 +9,14 @@ import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
-    private int n;
-    private int trials;
-    private double[] results;
-
+    private final int trials;
+    private final double[] results;
+    private final double confidence95 = 1.96;
     public PercolationStats(int n, int trials) {
-        if(n<=0 || trials<=0)throw new java.lang.IllegalArgumentException();
-        this.n = n;
+        if (n <= 0 || trials <= 0)throw new java.lang.IllegalArgumentException();
         this.trials = trials;
         this.results = new double[trials];
-        for(int i=0; i<trials; i++) {
+        for (int i = 0; i < trials; i++) {
             Percolation p = new Percolation(n);
             double count = 0;
             while (!p.percolates()) {
@@ -40,20 +38,23 @@ public class PercolationStats {
     public double stddev() {
         return StdStats.stddev(results);
     }
-    public double confidenceLo(){
-        return mean() - 1.96 * stddev() / Math.sqrt(trials);
+    public double confidenceLo() {
+        return mean() - confidence95 * stddev() / Math.sqrt(trials);
     }
-    public double confidenceHi(){
-        return mean() + 1.96 * stddev() / Math.sqrt(trials);
+    public double confidenceHi() {
+        return mean() + confidence95 * stddev() / Math.sqrt(trials);
     }
     public static void main(String[] args) {
         int n = Integer.parseInt(args[0]);
         int T = Integer.parseInt(args[1]);
         PercolationStats ps = new PercolationStats(n, T);
-        StdOut.print(ps.mean());
-        StdOut.print(ps.stddev());
-        StdOut.print(ps.confidenceLo());
-        StdOut.print(ps.confidenceHi());
+        // StdOut.print(ps.mean());
+        // StdOut.print(ps.stddev());
+        // StdOut.print(ps.confidenceLo());
+        // StdOut.print(ps.confidenceHi());
+        StdOut.println("mean                    = " + ps.mean());
+        StdOut.println("stddev                  = " + ps.stddev());
+        StdOut.println("95% confidence interval = [" + ps.confidenceLo() + ", " + ps.confidenceHi() + "]");
 
     }
 }
