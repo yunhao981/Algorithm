@@ -31,7 +31,7 @@ public class Percolation {
 
     // open site (row, col) if it is not open already
     public void open(int row, int col) {
-        if(!indicesValid(row, col)) throw new java.lang.IllegalArgumentException();
+        if (!indicesValid(row, col)) throw new java.lang.IllegalArgumentException();
         int index = map2dTo1d(row, col);
         if (row == 1) {
             wquf.union(0, index);
