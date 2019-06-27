@@ -11,13 +11,12 @@ import edu.princeton.cs.algs4.StdStats;
 public class PercolationStats {
     private static final double CONFIDENCE_95 = 1.96;
     private final int trials;
-    private final double[] results;
     private final double mean;
     private final double stddev;
     public PercolationStats(int n, int trials) {
         if (n <= 0 || trials <= 0)throw new java.lang.IllegalArgumentException();
         this.trials = trials;
-        this.results = new double[trials];
+        double[] results = new double[trials];
         for (int i = 0; i < trials; i++) {
             Percolation p = new Percolation(n);
             double count = 0;

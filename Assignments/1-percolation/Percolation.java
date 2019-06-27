@@ -68,17 +68,22 @@ public class Percolation {
 
         if (indicesValid(row, col)) {
             open[index-1] = true;
+            openSites++;
         }
-        openSites++;
+
     }
 
     // is site (row, col) open?
     public boolean isOpen(int row, int col) {
+        if (!indicesValid(row, col))
+            throw new java.lang.IllegalArgumentException();
         return open[(row - 1) * size + col -1];
     }
 
     // is site (row, col) full?
     public boolean isFull(int row, int col) {
+        if (!indicesValid(row, col))
+            throw new java.lang.IllegalArgumentException();
         return wquf.connected((row - 1) * size + col, 0);
     }
 
