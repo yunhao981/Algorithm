@@ -65,6 +65,10 @@ public class Percolation {
             wquf.union(index + size, index);
             open[index-1] = true;
         }
+
+        if (indicesValid(row, col)) {
+            open[index-1] = true;
+        }
         openSites++;
     }
 
