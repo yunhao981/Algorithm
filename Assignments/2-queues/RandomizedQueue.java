@@ -33,14 +33,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // add the item
     public void enqueue(Item item) {
-        if(item == null) {
+        if (item == null) {
             throw new IllegalArgumentException();
         }
         Node oldLast = last;
         last = new Node();
         last.item = item;
         last.next = null;
-        if(isEmpty()) first = last;
+        if (isEmpty()) first = last;
         else {
             oldLast.next = last;
             last.prev = oldLast;
@@ -53,7 +53,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         Item item;
         int id = StdRandom.uniform(size);
         Node current = first;
-        for(int i=0; i<id; i++) {
+        for (int i = 0; i < id; i++) {
             current = current.next;
         }
         current.next = current.next.next;
@@ -67,7 +67,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         Item item;
         int id = StdRandom.uniform(size);
         Node current = first;
-        for(int i=0; i<id; i++) {
+        for (int i = 0; i < id; i++) {
             current = current.next;
         }
         item = current.item;
@@ -94,7 +94,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
-            if(current.next == null) {
+            if (current.next == null) {
                 throw new NoSuchElementException();
             }
 
@@ -109,7 +109,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         StdOut.println("RandomizedQueue is Empty: " + rq.isEmpty());
         StdOut.println("size: " + rq.size());
 
-        for (Integer i=0; i<5; i++){
+        for (Integer i = 0; i < 5; i++){
             rq.enqueue(i);
         }
 

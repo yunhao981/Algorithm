@@ -1,4 +1,7 @@
 *.DS_STORE
 *.class
-.idea/
+*.idea/
 .vscode/
+*.zip
+*.out/
+
