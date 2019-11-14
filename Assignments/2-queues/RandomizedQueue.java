@@ -23,7 +23,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
     // is the randomized queue empty?
     public boolean isEmpty() {
-        return (first == null);
+        return (first == null && last == null);
     }
 
     // return the number of items on the randomized queue
@@ -40,7 +40,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         last = new Node();
         last.item = item;
         last.next = null;
-        if (isEmpty()) first = last;
+        if (first == null && oldLast == null) first = last;
         else {
             oldLast.next = last;
             last.prev = oldLast;
@@ -53,11 +53,36 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         Item item;
         int id = StdRandom.uniform(size);
         Node current = first;
-        for (int i = 0; i < id; i++) {
-            current = current.next;
+        if (current == null) {
+            throw new NoSuchElementException();
         }
-        current.next = current.next.next;
+
+        for (int i = 0; i < id; i++) {
+            if (current.next != null)
+                current = current.next;
+        }
+
         item = current.item;
+        // Remove current
+
+        Node toDelete = current;
+        if (current == first && first.next == null) {
+            first = null;
+            last = null;
+        } else if (current == first) {
+            current = current.next;
+            first = first.next;
+            first.prev = null;
+        } else {
+            current = current.prev;
+            if (toDelete.next == null) {
+                current.next = null;
+            } else {
+                current.next = toDelete.next;
+                current.next.prev = toDelete.prev;
+            }
+        }
+
         size--;
         return item;
     }
@@ -67,6 +92,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         Item item;
         int id = StdRandom.uniform(size);
         Node current = first;
+        if (current == null) {
+            throw new NoSuchElementException();
+        }
+
         for (int i = 0; i < id; i++) {
             current = current.next;
         }
@@ -94,7 +123,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
-            if (current.next == null) {
+            if (current == null) {
                 throw new NoSuchElementException();
             }
 
@@ -109,6 +138,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         StdOut.println("RandomizedQueue is Empty: " + rq.isEmpty());
         StdOut.println("size: " + rq.size());
 
+        rq.enqueue(283);
+        StdOut.println(rq.sample());
+
+        rq.enqueue(119);
+
+        StdOut.println(rq.dequeue());
+        StdOut.println(rq.dequeue());
+
         for (Integer i = 0; i < 5; i++){
             rq.enqueue(i);
         }
@@ -117,9 +154,11 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         StdOut.println("Deque: " + rq.dequeue());
         StdOut.println("Sample: " + rq.sample());
 
-        Iterator<Integer> it = rq.iterator();
-        StdOut.println("Iterator: " + it.next());
-        StdOut.println("It has next: " + it.hasNext());
+        Iterator<Integer> jt = rq.iterator();
+        while (jt.hasNext()) {
+            Integer i = jt.next();
+            StdOut.println("it: " + i);
+        }
 
     }
 }
