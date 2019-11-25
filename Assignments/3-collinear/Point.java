@@ -8,8 +8,10 @@
  *
  ******************************************************************************/
 
-import java.util.Comparator;
 import edu.princeton.cs.algs4.StdDraw;
+import edu.princeton.cs.algs4.StdOut;
+
+import java.util.Comparator;
 
 public class Point implements Comparable<Point> {
 
@@ -60,6 +62,21 @@ public class Point implements Comparable<Point> {
      */
     public double slopeTo(Point that) {
         /* YOUR CODE HERE */
+        assert that.x >= 0 && that.x <= 32767;
+        assert that.y >= 0 && that.y <= 32767;
+
+        if (that.x == this.x) {
+            if(that.y == this.y)
+                return Double.POSITIVE_INFINITY;
+            else
+                return Double.NEGATIVE_INFINITY;
+        }
+
+        if (that.y == this.y) {
+            return +0.0;
+        }
+
+        return (that.y - this.y) / (that.x - this.x);
     }
 
     /**
@@ -76,6 +93,16 @@ public class Point implements Comparable<Point> {
      */
     public int compareTo(Point that) {
         /* YOUR CODE HERE */
+        assert that.x >= 0 && that.x <= 32767;
+        assert that.y >= 0 && that.y <= 32767;
+
+        if (this.x == that.x && this.y == that.y) {
+            return 0;
+        }
+        if (this.y < that.y || (this.y == that.y && this.x < that.x)) {
+            return -1;
+        }
+        return 1;
     }
 
     /**
@@ -86,7 +113,20 @@ public class Point implements Comparable<Point> {
      */
     public Comparator<Point> slopeOrder() {
         /* YOUR CODE HERE */
+       return new SlopeOrder();
     }
+
+    private class SlopeOrder implements Comparator<Point> {
+        public int compare(Point o1, Point o2) {
+            double o1Slope = slopeTo(o1);
+            double o2Slope = slopeTo(o2);
+
+            if (o1Slope < o2Slope) return -1;
+            else if (o1Slope > o2Slope) return 1;
+            return 0;
+        }
+    }
+
 
 
     /**
@@ -106,5 +146,17 @@ public class Point implements Comparable<Point> {
      */
     public static void main(String[] args) {
         /* YOUR CODE HERE */
+        Point a = new Point(0,0);
+        Point b = new Point(0,0);
+        Point c = new Point(1,0);
+        Point d = new Point(0,1);
+        StdOut.println(a.toString());
+        StdOut.println(a.slopeTo(b));
+        StdOut.println(a.slopeTo(c));
+        StdOut.println(a.slopeTo(d));
+        StdOut.println(a.compareTo(b));
+        StdOut.println(a.compareTo(c));
+        StdOut.println(a.compareTo(d));
+
     }
 }
