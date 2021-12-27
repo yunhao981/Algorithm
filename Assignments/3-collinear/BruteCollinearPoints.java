@@ -9,38 +9,39 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BruteCollinearPoints {
-    private LineSegment[] segments;
+    private final Point[] points;
+    private final LineSegment[] segments;
 
     public BruteCollinearPoints(Point[] points) {
         if (points == null) {
             throw new IllegalArgumentException();
         }
         // finds all line segments containing 4 points
-        Point[] points1 = Arrays.copyOf(points, points.length);
-        for (Point point : points1) {
+        this.points = Arrays.copyOf(points, points.length);
+        for (Point point : this.points) {
             if (point == null) {
                 throw new IllegalArgumentException();
             }
         }
 
-        Arrays.sort(points1);
-        for (int i = 0; i < points1.length; i++) {
+        Arrays.sort(this.points);
+        for (int i = 0; i < this.points.length; i++) {
             if (i > 0 && points[i].compareTo(points[i - 1]) == 0) {
                 throw new IllegalArgumentException();
             }
         }
 
         //n^4
-        int n = points1.length;
+        int n = this.points.length;
         List<LineSegment> ans = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             for (int j = i + 1; j < n; j++) {
                 for (int k = j + 1; k < n; k++) {
                     for (int l = k + 1; l < n; l++) {
-                        Point p = points1[i];
-                        Point q = points1[j];
-                        Point r = points1[k];
-                        Point s = points1[l];
+                        Point p = this.points[i];
+                        Point q = this.points[j];
+                        Point r = this.points[k];
+                        Point s = this.points[l];
                         if (Double.compare(p.slopeTo(q), p.slopeTo(r)) == 0
                                 && Double.compare(p.slopeTo(r), p.slopeTo(s)) == 0) {
                             LineSegment segment = new LineSegment(p, s);
@@ -61,7 +62,7 @@ public class BruteCollinearPoints {
 
     // the line segments
     public LineSegment[] segments() {
-        return this.segments;
+        return Arrays.copyOf(segments, segments.length);
     }
 
     public static void main(String[] args) {
